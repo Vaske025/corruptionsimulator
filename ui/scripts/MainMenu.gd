@@ -1,10 +1,10 @@
 extends Control
 
-func _on_start_game_button_pressed() -> void:
-	GameState.transition_to(GameState.State.CHARACTER_CREATION)
+func _on_start_game_button_pressed() :
+	GameStateManager.transition_to(GameStateManager.State.CHARACTER_CREATION)
 
 
-func _on_exit_button_pressed() -> void:
+func _on_exit_button_pressed() :
 	get_tree().quit()
 
 

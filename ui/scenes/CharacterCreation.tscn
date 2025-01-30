@@ -1,8 +1,11 @@
-[gd_scene format=3 uid="uid://c15ikn3vs7r43"]
+[gd_scene load_steps=2 format=3 uid="uid://c15ikn3vs7r43"]
+
+[ext_resource type="Script" path="res://ui/scripts/CharacterCreation.gd" id="1_w8ok3"]
 
 [node name="CharacterCreation" type="Control"]
 layout_mode = 3
 anchors_preset = 0
+script = ExtResource("1_w8ok3")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 0
@@ -49,6 +52,7 @@ text = "Start Game"
 [node name="PointsLabel" type="Label" parent="VBoxContainer"]
 layout_mode = 2
 text = "Points Remaining: 10"
+script = ExtResource("1_w8ok3")
 
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/DiplomacyButton" to="." method="_on_diplomacy_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer2/PropagandaButton" to="." method="_on_propaganda_button_pressed"]
