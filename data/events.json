@@ -1,0 +1,9 @@
+{
+	"protests": [
+		{
+			"id": "tax_protest",
+			"trigger_conditions": ["economy < 30"],
+			"text": "Protest against high taxes!"
+		}
+	]
+}s
