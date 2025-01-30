@@ -1,6 +1,4 @@
-# core/game_state.gd
 extends Node
-#class_name GameState
 
 enum State { MAIN_MENU, CHARACTER_CREATION, GAME }
 var current_state: State = State.MAIN_MENU
@@ -9,6 +7,7 @@ func transition_to(new_state: State):
 	exit_state(current_state)
 	current_state = new_state
 	enter_state(new_state)
+	EventBusManager.emit_game_state_changed(new_state)
 
 func enter_state(state: State):
 	match state:
@@ -19,5 +18,5 @@ func enter_state(state: State):
 		State.GAME:
 			get_tree().change_scene_to_file("res://ui/scenes/World.tscn")
 
-func exit_state(state: State):
+func exit_state(_state: State):
 	pass

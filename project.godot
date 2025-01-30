@@ -17,8 +17,9 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-Global="*res://ui/scripts/Global.gd"
-GameState="*res://core/game_state.gd"
+GameStateManager="*res://core/game_state.gd"
+EventBusManager="*res://core/event_bus.gd"
+GlobalData="*res://ui/scripts/Global.gd"
 
 [editor]
 

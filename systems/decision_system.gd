@@ -18,11 +18,17 @@ var available_decisions = [
 ]
 
 func make_decision(decision_id: String):
-	var decision = available_decisions.find(func(d): return d.id == decision_id)
-	apply_effects(decision.effects)
-	# Add to decision history
-	Global.game_history.append(decision)
-
+	var decision = null
+	for d in available_decisions:
+		if d["id"] == decision_id:
+			decision = d
+			break
+	
+	if decision:
+		apply_effects(decision["effects"])
+		GlobalGameData.game_history.append(decision)
+	else:
+		push_error("Decision not found: " + decision_id)
 func apply_effects(effects: Dictionary):
 	for stat in effects:
 		if stat in Global.country_stats:

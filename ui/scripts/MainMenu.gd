@@ -13,4 +13,4 @@ func _on_options_button_pressed() -> void:
 
 
 func _on_load_game_button_pressed() -> void:
-	get_tree().change_scene_to_file("res://systems/World.tscn")
+	get_tree().change_scene_to_file("res://ui/scenes/World.tscn")

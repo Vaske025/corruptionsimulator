@@ -46,6 +46,10 @@ text = "+"
 layout_mode = 2
 text = "Start Game"
 
+[node name="PointsLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Points Remaining: 10"
+
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/DiplomacyButton" to="." method="_on_diplomacy_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer2/PropagandaButton" to="." method="_on_propaganda_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer3/AuthorityButton" to="." method="_on_authority_button_pressed"]

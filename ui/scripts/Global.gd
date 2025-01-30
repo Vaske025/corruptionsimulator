@@ -1,9 +1,5 @@
-# ui/scripts/Global.gd
 extends Node
 
-# Singleton for global game state
-#class_name Global
-
+var simulation = CountrySimulation.new()
 var player_traits = {}
-var country_stats = {}
 var game_history = []
