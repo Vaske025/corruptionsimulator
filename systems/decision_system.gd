@@ -23,13 +23,14 @@ func make_decision(decision_id: String):
 		if d["id"] == decision_id:
 			decision = d
 			break
-	
 	if decision:
 		apply_effects(decision["effects"])
-		GlobalGameData.game_history.append(decision)
+		GlobalData.game_history.append(decision)
 	else:
 		push_error("Decision not found: " + decision_id)
+
 func apply_effects(effects: Dictionary):
+	var country_stats = GlobalData.simulation.stats
 	for stat in effects:
-		if stat in Global.country_stats:
-			Global.country_stats[stat] += effects[stat]
+		if stat in country_stats:
+			country_stats[stat] += effects[stat]

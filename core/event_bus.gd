@@ -1,4 +1,5 @@
-# Autoload-safe event bus implementationclass_name EventBus
+# Autoload-safe event bus implementation
+
 extends Node
 
 # Signals
