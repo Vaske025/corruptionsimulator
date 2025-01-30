@@ -1,22 +1,36 @@
+# ui/scripts/CharacterCreation.gd
 extends Control
 
 var traits = {"diplomacy": 0, "propaganda": 0, "authority": 0}
-var points = 10
+var points: int = 10
+
+func _ready():
+	_update_labels()
 
 func _update_labels():
-	$VBoxContainer/Diplomacy/Label.text = "Diplomacy: %d" % traits.diplomacy
-	$VBoxContainer/Propaganda/Label.text = "Propaganda: %d" % traits.propaganda
-	$VBoxContainer/Authority/Label.text = "Authority: %d" % traits.authority
-	$VBoxContainer/PointsLabel.text = "Points: %d" % points
+	%DiplomacyLabel.text = "Diplomacy: %d" % traits.diplomacy
+	%PropagandaLabel.text = "Propaganda: %d" % traits.propaganda
+	%AuthorityLabel.text = "Authority: %d" % traits.authority
+	%PointsLabel.text = "Points Remaining: %d" % points
 
-func _on_DiplomacyButton_pressed():
+func _on_diplomacy_button_pressed():
 	if points > 0:
 		traits.diplomacy += 1
 		points -= 1
 		_update_labels()
 
-# Уради исто за остала дугмад
+func _on_propaganda_button_pressed():
+	if points > 0:
+		traits.propaganda += 1
+		points -= 1
+		_update_labels()
 
-func _on_StartButton_pressed():
-	Global.player_traits = traits  # Global скрипта је потребна!
-	get_tree().change_scene_to_file("res://World.tscn")
+func _on_authority_button_pressed():
+	if points > 0:
+		traits.authority += 1
+		points -= 1
+		_update_labels()
+
+func _on_start_button_pressed():
+	Global.player_traits = traits
+	GameState.transition_to(GameState.State.GAME)

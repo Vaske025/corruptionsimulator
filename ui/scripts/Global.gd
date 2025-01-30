@@ -1,5 +1,9 @@
-# World.gd
-extends Node2D
+# ui/scripts/Global.gd
+extends Node
 
-func _ready():
-	print("Player traits: ", Global.player_traits)
+# Singleton for global game state
+#class_name Global
+
+var player_traits = {}
+var country_stats = {}
+var game_history = []

@@ -1,9 +1,22 @@
+
 {
-	"protests": [
+	"events": [
 		{
 			"id": "tax_protest",
-			"trigger_conditions": ["economy < 30"],
-			"text": "Protest against high taxes!"
+			"type": "protest",
+			"title": "Tax Reform Protest",
+			"description": "Citizens are protesting against the new tax reforms!",
+			"trigger_conditions": ["economy < 30", "public_support < 40"],
+			"options": [
+				{
+					"text": "Deploy Police",
+					"effects": {"public_support": -10, "corruption": +5}
+				},
+				{
+					"text": "Negotiate",
+					"effects": {"economy": -5, "public_support": +10}
+				}
+			]
 		}
 	]
-}s
+}

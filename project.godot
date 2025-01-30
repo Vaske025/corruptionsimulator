@@ -15,16 +15,14 @@ run/main_scene="res://ui/scenes/MainMenu.tscn"
 config/features=PackedStringArray("4.3", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[autoload]
+
+Global="*res://ui/scripts/Global.gd"
+GameState="*res://core/game_state.gd"
+
 [editor]
 
 version_control/autoload_on_startup=true
-
-[input]
-
-AutoLoad={
-"deadzone": 0.5,
-"events": []
-}
 
 [rendering]
 

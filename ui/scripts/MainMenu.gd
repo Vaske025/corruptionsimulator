@@ -1,14 +1,16 @@
 extends Control
 
-func _on_StartGameButton_pressed():
-	get_tree().change_scene_to_file("res://ui/scenes/CharacterCreation.tscn")
+func _on_start_game_button_pressed() -> void:
+	GameState.transition_to(GameState.State.CHARACTER_CREATION)
 
-func _on_load_game_pressed():
-	# Учитај сачувану игру (ово ћеш имплементирати касније)
-	get_tree().change_scene_to_file("res://systems/World.tscn")
 
-func _on_options_pressed():
+func _on_exit_button_pressed() -> void:
+	get_tree().quit()
+
+
+func _on_options_button_pressed() -> void:
 	get_tree().change_scene_to_file("res://ui/scenes/OptionsMenu.tscn")
 
-func _on_ExitButton_pressed():
-	get_tree().quit()
+
+func _on_load_game_button_pressed() -> void:
+	get_tree().change_scene_to_file("res://systems/World.tscn")
