@@ -21,6 +21,11 @@ GameStateManager="*res://core/game_state.gd"
 EventBusManager="*res://core/event_bus.gd"
 GlobalData="*res://ui/scripts/Global.gd"
 
+[display]
+
+window/size/viewport_width=1280
+window/size/viewport_height=720
+
 [editor]
 
 version_control/autoload_on_startup=true
