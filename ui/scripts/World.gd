@@ -106,13 +106,15 @@ func spawn_protest(event: Dictionary):
 
 func load_json(path: String) -> Dictionary:
 	var json_result = null
-	var file = File.new()  # Create a new File instance
-	if file.file_exists(path):
-		file.open(path, File.READ)
+	var file = FileAccess.open(path, FileAccess.READ)  # Koristimo FileAccess.open()
+	if file:
 		var json_string = file.get_as_text()
 		file.close()
-		json_result = parse_json(json_string)
-		if not json_result:
+		var json = JSON.new()  # Napravimo instancu klase JSON
+		var parse_result = json.parse(json_string)  # Pozovemo parse() na instanci
+		if parse_result:
+			json_result = parse_result.result
+		else:
 			push_error("Failed to parse JSON from file: " + path)
 	else:
 		push_error("File does not exist: " + path)

@@ -9,11 +9,11 @@
 			"options": [
 				{
 					"text": "Deploy Police",
-					"effects": {"public_support": -10, "corruption": 5}  // Removed '+' before numbers
+					"effects": {"public_support": -10, "corruption": 5}
 				},
 				{
 					"text": "Negotiate",
-					"effects": {"economy": -5, "public_support": 10}    // Removed '+' before numbers
+					"effects": {"economy": -5, "public_support": 10}
 				}
 			]
 		}
