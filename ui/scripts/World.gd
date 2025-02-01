@@ -1,72 +1,77 @@
 extends Node
 
-# Declare member variables
+# Variables for tracking time
 var current_turn: int = 1
 var turns_per_day: int = 10
 var days_passed: int = 0
 
-# Reference to global data and country simulation using 'onready'
+# References to global data
 @onready var player_traits = GlobalData.player_traits
 @onready var country_simulation = GlobalData.simulation
 
-# UI references
+# References to UI elements
 @onready var turn_label = $UI/VBoxContainer/TurnLabel
 @onready var economy_label = $UI/VBoxContainer/EconomyLabel
 @onready var public_support_label = $UI/VBoxContainer/PublicSupportLabel
+@onready var morality_label = $UI/VBoxContainer/MoralityLabel  # New label for morality
 @onready var next_turn_button = $UI/VBoxContainer/NextTurnButton
 
-# Called when the node enters the scene tree for the first time.
+# References for notifications
+@onready var notification_panel = $UI/NotificationPanel
+@onready var notification_label = $UI/NotificationPanel/NotificationLabel
+@onready var option_buttons = {
+	"Option1": $UI/NotificationPanel/Option1Button,
+	"Option2": $UI/NotificationPanel/Option2Button
+}
+
+# Initialization
 func _ready():
-	# Initialize game state
 	print("Game started!")
 	_update_ui()
+	notification_panel.visible = false  # Hide the notification panel
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta: float) -> void:
-	# Placeholder for time passing logic
-	if Input.is_action_just_pressed("next_turn") or next_turn_button.is_pressed():
-		_next_turn()
-
+# Update the UI
 func _update_ui():
 	if turn_label:
 		turn_label.text = "Turn: %d | Day: %d" % [current_turn, days_passed]
 	else:
 		print("Turn label is null")
-
 	if economy_label:
 		economy_label.text = "Economy: %d" % country_simulation.stats.economy
 	else:
 		print("Economy label is null")
-
 	if public_support_label:
 		public_support_label.text = "Public Support: %d" % country_simulation.stats.public_support
 	else:
 		print("Public support label is null")
+	if morality_label:
+		morality_label.text = "Morality: %d" % GlobalData.morality_score  # Display morality
+	else:
+		print("Morality label is null")
 
-func _next_turn():
+# Handle the next turn
+func next_turn():
 	current_turn += 1
 	if current_turn > turns_per_day:
 		days_passed += 1
 		current_turn = 1
 	_handle_daily_events()
+	country_simulation._process(10)  # Simulate stats with a larger delta
 	_update_ui()
+	check_game_over()  # Check if the game is over
 
+# Handle daily events
 func _handle_daily_events():
-	# Placeholder for handling daily events
 	print("Handling daily events...")
-	# Simulate country stats based on player traits
-	country_simulation._process(1) # Assuming delta is 1 for simplicity
-	# Check for protests or other events
+	country_simulation._process(10)  # Simulate stats with a larger delta
 	check_for_protests()
 
+# Check for protests
 func check_for_protests():
-	# Load the events JSON file
-	var events = load_json("res://data/events.json")
+	var events = GlobalData.load_json("res://data/events.json")  # Use the global function
 	if not events:
 		print("Failed to load events.json")
 		return
-	
-	# Iterate over the events and check conditions
 	for event in events["events"]:
 		var trigger_conditions_met = true
 		for condition in event["trigger_conditions"]:
@@ -76,15 +81,13 @@ func check_for_protests():
 		if trigger_conditions_met:
 			spawn_protest(event)
 
+# Evaluate conditions
 func evaluate_condition(condition: String) -> bool:
-	# Simple evaluation of conditions like "economy < 30"
 	var parts = condition.split(" ")
 	var stat = parts[0]
 	var operator = parts[1]
 	var value = int(parts[2])
-	
 	var stat_value = country_simulation.stats[stat]
-	
 	if operator == "<":
 		return stat_value < value
 	elif operator == ">":
@@ -95,27 +98,91 @@ func evaluate_condition(condition: String) -> bool:
 		push_error("Unknown operator: " + operator)
 		return false
 
+# Spawn a protest
 func spawn_protest(event: Dictionary):
-	# Example: Spawn a protest based on the event data
 	var protest_data = {
 		"title": event["title"],
 		"description": event["description"],
 		"options": event["options"]
 	}
-	EventBusManager.emit_protest_spawned(protest_data)
+	show_notification(protest_data)  # Show the notification
 
-func load_json(path: String) -> Dictionary:
-	var json_result = null
-	var file = FileAccess.open(path, FileAccess.READ)  # Koristimo FileAccess.open()
-	if file:
-		var json_string = file.get_as_text()
-		file.close()
-		var json = JSON.new()  # Napravimo instancu klase JSON
-		var parse_result = json.parse(json_string)  # Pozovemo parse() na instanci
-		if parse_result:
-			json_result = parse_result.result
-		else:
-			push_error("Failed to parse JSON from file: " + path)
-	else:
-		push_error("File does not exist: " + path)
-	return json_result if json_result != null else {}
+# Show a notification
+func show_notification(data: Dictionary):
+	if not notification_panel or not notification_label or not option_buttons["Option1"] or not option_buttons["Option2"]:
+		print("Error: Notification UI elements are not properly set up.")
+		return
+
+	notification_label.text = data["title"] + "\n\n" + data["description"]
+	option_buttons["Option1"].text = data["options"][0]["text"]
+	option_buttons["Option2"].text = data["options"][1]["text"]
+
+	# Set effects for options
+	option_buttons["Option1"].effects = data["options"][0]["effects"]
+	option_buttons["Option2"].effects = data["options"][1]["effects"]
+
+	notification_panel.visible = true  # Show the notification panel
+
+# Handle option 1
+func _on_option1_pressed():
+	if not option_buttons["Option1"]:
+		print("Error: Option1 button is null")
+		return
+	apply_effects(option_buttons["Option1"].effects)
+	notification_panel.visible = false  # Hide the notification panel
+
+# Handle option 2
+func _on_option2_pressed():
+	if not option_buttons["Option2"]:
+		print("Error: Option2 button is null")
+		return
+	apply_effects(option_buttons["Option2"].effects)
+	notification_panel.visible = false  # Hide the notification panel
+
+# Apply effects
+func apply_effects(effects: Dictionary):
+	var country_stats = GlobalData.simulation.stats
+	for stat in effects:
+		if stat in country_stats:
+			country_stats[stat] += effects[stat]
+		elif stat == "morality":
+			GlobalData.update_morality(effects[stat])  # Update morality
+
+# Check if the game is over
+func check_game_over():
+	if GlobalData.morality_score <= 0:
+		show_notification({
+			"title": "You Have Been Overthrown!",
+			"description": "Your immoral actions have led to your downfall.",
+			"options": [
+				{"text": "Restart", "effects": {}},
+				{"text": "Quit", "effects": {}}
+			]
+		})
+	elif country_simulation.stats.public_support <= 10:
+		show_notification({
+			"title": "The Public Has Turned Against You!",
+			"description": "Your policies have alienated the population.",
+			"options": [
+				{"text": "Improve Relations", "effects": {"public_support": +20, "morality": +10}},
+				{"text": "Use Force", "effects": {"public_support": -10, "corruption": +5}}
+			]
+		})
+	elif days_passed >= 100:
+		show_notification({
+			"title": "You Survived Your Term!",
+			"description": "Congratulations on completing your presidency.",
+			"options": [
+				{"text": "Restart", "effects": {}},
+				{"text": "Quit", "effects": {}}
+			]
+		})
+
+# End the game
+func _end_game(message: String):
+	print(message)
+	get_tree().change_scene_to_file("res://ui/scenes/MainMenu.tscn")
+
+# Handle the "Next Turn" button press
+func _on_next_turn_button_pressed():
+	next_turn()

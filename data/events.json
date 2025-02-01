@@ -9,11 +9,62 @@
 			"options": [
 				{
 					"text": "Deploy Police",
-					"effects": {"public_support": -10, "corruption": 5}
+					"effects": {"public_support": -10, "corruption": 5, "morality": -5}
 				},
 				{
 					"text": "Negotiate",
-					"effects": {"economy": -5, "public_support": 10}
+					"effects": {"economy": -5, "public_support": 10, "morality": 5}
+				}
+			]
+		},
+		{
+			"id": "education_strike",
+			"type": "protest",
+			"title": "Education Strike",
+			"description": "Teachers and students are protesting against poor education policies!",
+			"trigger_conditions": ["education < 30", "public_support < 50"],
+			"options": [
+				{
+					"text": "Increase Education Funding",
+					"effects": {"education": 10, "economy": -5, "morality": 5}
+				},
+				{
+					"text": "Ignore the Protest",
+					"effects": {"education": -5, "public_support": -10, "morality": -10}
+				}
+			]
+		},
+		{
+			"id": "healthcare_crisis",
+			"type": "event",
+			"title": "Healthcare Crisis",
+			"description": "The healthcare system is collapsing due to underfunding!",
+			"trigger_conditions": ["healthcare < 20", "public_support < 60"],
+			"options": [
+				{
+					"text": "Invest in Healthcare",
+					"effects": {"healthcare": 15, "economy": -10, "public_support": 5, "morality": 10}
+				},
+				{
+					"text": "Do Nothing",
+					"effects": {"healthcare": -10, "public_support": -15, "morality": -15}
+				}
+			]
+		},
+		{
+			"id": "corruption_scandal",
+			"type": "event",
+			"title": "Corruption Scandal",
+			"description": "A major corruption scandal has been uncovered!",
+			"trigger_conditions": ["corruption > 70", "public_support < 50"],
+			"options": [
+				{
+					"text": "Launch Anti-Corruption Campaign",
+					"effects": {"corruption": -20, "public_support": 10, "morality": 10}
+				},
+				{
+					"text": "Cover It Up",
+					"effects": {"corruption": 10, "public_support": -20, "morality": -20}
 				}
 			]
 		}

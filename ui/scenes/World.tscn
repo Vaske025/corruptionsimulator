@@ -14,7 +14,7 @@ offset_bottom = 40.0
 [node name="VBoxContainer" type="VBoxContainer" parent="UI"]
 layout_mode = 1
 offset_left = 1140.0
-offset_top = 608.0
+offset_top = 581.0
 offset_right = 1280.0
 offset_bottom = 720.0
 
@@ -30,6 +30,39 @@ text = "Economy: 50"
 layout_mode = 2
 text = "Public Support: 70"
 
+[node name="MoralityLabel" type="Label" parent="UI/VBoxContainer"]
+layout_mode = 2
+text = "Morality: 50"
+
 [node name="NextTurnButton" type="Button" parent="UI/VBoxContainer"]
 layout_mode = 2
 text = "Next Turn"
+
+[node name="NotificationPanel" type="Panel" parent="UI"]
+layout_mode = 0
+offset_left = 944.0
+offset_top = 8.0
+offset_right = 1272.0
+offset_bottom = 81.0
+
+[node name="NotificationLabel" type="Label" parent="UI/NotificationPanel"]
+layout_mode = 0
+offset_left = 17.0
+offset_top = 12.0
+offset_right = 319.0
+offset_bottom = 37.0
+
+[node name="Option1Button" type="Button" parent="UI/NotificationPanel"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 39.0
+offset_right = 140.0
+offset_bottom = 63.0
+
+[node name="Option2Button" type="Button" parent="UI/NotificationPanel"]
+offset_left = 192.0
+offset_top = 39.0
+offset_right = 312.0
+offset_bottom = 63.0
+
+[connection signal="pressed" from="UI/VBoxContainer/NextTurnButton" to="." method="_on_next_turn_button_pressed"]
