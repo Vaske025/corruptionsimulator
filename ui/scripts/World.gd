@@ -20,8 +20,8 @@ var days_passed: int = 0
 @onready var notification_panel = $UI/NotificationPanel
 @onready var notification_label = $UI/NotificationPanel/NotificationLabel
 @onready var option_buttons = {
-	"Option1": $UI/NotificationPanel/Option1Button,
-	"Option2": $UI/NotificationPanel/Option2Button
+	"Option1": $UI/NotificationPanel/Option1Button as CustomButton,
+	"Option2": $UI/NotificationPanel/Option2Button as CustomButton
 }
 
 # Initialization
@@ -107,23 +107,27 @@ func spawn_protest(event: Dictionary):
 	}
 	show_notification(protest_data)  # Show the notification
 
-# Show a notification
 func show_notification(data: Dictionary):
 	if not notification_panel or not notification_label or not option_buttons["Option1"] or not option_buttons["Option2"]:
 		print("Error: Notification UI elements are not properly set up.")
 		return
 
+	# Set the notification text
 	notification_label.text = data["title"] + "\n\n" + data["description"]
+
+	# Set the option texts
 	option_buttons["Option1"].text = data["options"][0]["text"]
 	option_buttons["Option2"].text = data["options"][1]["text"]
 
-	# Set effects for options
-	option_buttons["Option1"].effects = data["options"][0]["effects"]
-	option_buttons["Option2"].effects = data["options"][1]["effects"]
+	# Set the effects for each option
+	if "effects" in data["options"][0]:
+		option_buttons["Option1"].effects = data["options"][0]["effects"]
+	if "effects" in data["options"][1]:
+		option_buttons["Option2"].effects = data["options"][1]["effects"]
 
-	notification_panel.visible = true  # Show the notification panel
-
-# Handle option 1
+	# Show the notification panel
+	notification_panel.visible = true
+	
 func _on_option1_pressed():
 	if not option_buttons["Option1"]:
 		print("Error: Option1 button is null")
@@ -131,7 +135,6 @@ func _on_option1_pressed():
 	apply_effects(option_buttons["Option1"].effects)
 	notification_panel.visible = false  # Hide the notification panel
 
-# Handle option 2
 func _on_option2_pressed():
 	if not option_buttons["Option2"]:
 		print("Error: Option2 button is null")
@@ -139,7 +142,6 @@ func _on_option2_pressed():
 	apply_effects(option_buttons["Option2"].effects)
 	notification_panel.visible = false  # Hide the notification panel
 
-# Apply effects
 func apply_effects(effects: Dictionary):
 	var country_stats = GlobalData.simulation.stats
 	for stat in effects:

@@ -19,10 +19,11 @@ static func load_json(path: String) -> Dictionary:
 	if file:
 		var json_string = file.get_as_text()
 		file.close()
-		var err = OK
 		var json = JSON.new()  # Create an instance of JSON
-		json_result = json.parse_json(json_string, err)  # Parse JSON and capture errors
-		if err != OK:
+		var err = json.parse(json_string)  # Parse JSON and capture errors
+		if err == OK:
+			json_result = json.get_data()  # Get parsed data if successful
+		else:
 			push_error("Failed to parse JSON from file: " + path)
 	else:
 		push_error("File does not exist: " + path)

@@ -1,7 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://dr16p6noigkal"]
+[gd_scene load_steps=2 format=3 uid="uid://dr16p6noigkal"]
 
 [ext_resource type="Script" path="res://ui/scripts/World.gd" id="1_uvadp"]
-[ext_resource type="Script" path="res://ui/scripts/CustomButton.gd" id="2_vj4x8"]
 
 [node name="World" type="Node2D"]
 script = ExtResource("1_uvadp")
@@ -59,7 +58,6 @@ offset_left = 16.0
 offset_top = 39.0
 offset_right = 140.0
 offset_bottom = 63.0
-script = ExtResource("2_vj4x8")
 
 [node name="Option2Button" type="Button" parent="UI/NotificationPanel"]
 layout_mode = 0
@@ -67,6 +65,5 @@ offset_left = 192.0
 offset_top = 39.0
 offset_right = 312.0
 offset_bottom = 63.0
-script = ExtResource("2_vj4x8")
 
 [connection signal="pressed" from="UI/VBoxContainer/NextTurnButton" to="." method="_on_next_turn_button_pressed"]
