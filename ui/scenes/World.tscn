@@ -41,33 +41,34 @@ text = "Next Turn"
 
 [node name="NotificationPanel" type="Panel" parent="UI"]
 layout_mode = 0
-offset_left = 500.0
+offset_left = 154.0
 offset_top = 41.0
-offset_right = 828.0
-offset_bottom = 114.0
+offset_right = 1125.0
+offset_bottom = 257.0
 
 [node name="NotificationLabel" type="Label" parent="UI/NotificationPanel"]
 layout_mode = 0
 offset_left = 17.0
 offset_top = 12.0
-offset_right = 319.0
-offset_bottom = 37.0
+offset_right = 959.0
+offset_bottom = 90.0
 
 [node name="Option1Button" type="Button" parent="UI/NotificationPanel"]
 layout_mode = 0
-offset_left = 16.0
-offset_top = 39.0
-offset_right = 140.0
-offset_bottom = 63.0
+offset_left = 10.0
+offset_top = 120.0
+offset_right = 418.0
+offset_bottom = 199.0
 script = ExtResource("2_vj4x8")
 
 [node name="Option2Button" type="Button" parent="UI/NotificationPanel"]
 layout_mode = 0
-offset_left = 192.0
-offset_top = 39.0
-offset_right = 312.0
-offset_bottom = 63.0
+offset_left = 488.0
+offset_top = 114.0
+offset_right = 923.0
+offset_bottom = 201.0
 script = ExtResource("2_vj4x8")
 
 [connection signal="pressed" from="UI/VBoxContainer/NextTurnButton" to="." method="_on_next_turn_button_pressed"]
 [connection signal="pressed" from="UI/NotificationPanel/Option1Button" to="." method="_on_option_1_button_pressed"]
+[connection signal="pressed" from="UI/NotificationPanel/Option2Button" to="." method="_on_option_2_button_pressed"]

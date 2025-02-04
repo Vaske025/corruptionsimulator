@@ -1,3 +1,4 @@
+# ui/scripts/World.gd
 extends Node
 
 # Variables for tracking time
@@ -69,8 +70,8 @@ func _handle_daily_events():
 # Check for protests
 func check_for_protests():
 	var events = GlobalData.load_json("res://data/events.json")  # Use the global function
-	if not events:
-		print("Failed to load events.json")
+	if not events or not events.has("events"):
+		print("Failed to load events.json or no events found.")
 		return
 	for event in events["events"]:
 		var trigger_conditions_met = true
@@ -79,15 +80,22 @@ func check_for_protests():
 				trigger_conditions_met = false
 				break
 		if trigger_conditions_met:
+			print("Event triggered:", event["title"])  # Debug print
 			spawn_protest(event)
 
 # Evaluate conditions
 func evaluate_condition(condition: String) -> bool:
 	var parts = condition.split(" ")
+	if parts.size() < 3:
+		print("Invalid condition format:", condition)
+		return false
 	var stat = parts[0]
 	var operator = parts[1]
 	var value = int(parts[2])
-	var stat_value = country_simulation.stats[stat]
+	var stat_value = country_simulation.stats.get(stat, -1)  # Use .get to avoid crashes
+	if stat_value == -1:
+		print("Unknown stat:", stat)
+		return false
 	if operator == "<":
 		return stat_value < value
 	elif operator == ">":
@@ -107,41 +115,51 @@ func spawn_protest(event: Dictionary):
 	}
 	show_notification(protest_data)  # Show the notification
 
+# Show a notification
 func show_notification(data: Dictionary):
 	if not notification_panel or not notification_label or not option_buttons["Option1"] or not option_buttons["Option2"]:
 		print("Error: Notification UI elements are not properly set up.")
 		return
 
 	# Set the notification text
-	notification_label.text = data["title"] + "\n\n" + data["description"]
+	if data.has("title") and data.has("description"):
+		notification_label.text = data["title"] + "\n\n" + data["description"]
+	else:
+		notification_label.text = "The public is against you!"  # Fallback message
+		print("Warning: Event data missing title or description.")
 
 	# Set the option texts
-	option_buttons["Option1"].text = data["options"][0]["text"]
-	option_buttons["Option2"].text = data["options"][1]["text"]
+	if data.has("options") and data["options"].size() >= 2:
+		option_buttons["Option1"].text = data["options"][0].get("text", "Option 1")
+		option_buttons["Option2"].text = data["options"][1].get("text", "Option 2")
 
-	# Set the effects for each option
-	if "effects" in data["options"][0]:
-		option_buttons["Option1"].effects = data["options"][0]["effects"]
-	if "effects" in data["options"][1]:
-		option_buttons["Option2"].effects = data["options"][1]["effects"]
+		# Set the effects for each option
+		if data["options"][0].has("effects"):
+			option_buttons["Option1"].effects = data["options"][0]["effects"]
+		if data["options"][1].has("effects"):
+			option_buttons["Option2"].effects = data["options"][1]["effects"]
+	else:
+		print("Warning: Event data missing options.")
 
 	# Show the notification panel
 	notification_panel.visible = true
-	
-func _on_option1_pressed():
+
+# Handle option button presses
+func _on_option_1_button_pressed():
 	if not option_buttons["Option1"]:
 		print("Error: Option1 button is null")
 		return
 	apply_effects(option_buttons["Option1"].effects)
 	notification_panel.visible = false  # Hide the notification panel
 
-func _on_option2_pressed():
+func _on_option_2_button_pressed():
 	if not option_buttons["Option2"]:
 		print("Error: Option2 button is null")
 		return
 	apply_effects(option_buttons["Option2"].effects)
 	notification_panel.visible = false  # Hide the notification panel
 
+# Apply effects from an option
 func apply_effects(effects: Dictionary):
 	var country_stats = GlobalData.simulation.stats
 	for stat in effects:
@@ -149,6 +167,11 @@ func apply_effects(effects: Dictionary):
 			country_stats[stat] += effects[stat]
 		elif stat == "morality":
 			GlobalData.update_morality(effects[stat])  # Update morality
+		elif stat == "history":  # Add to game history
+			GlobalData.game_history.append(effects[stat])
+		else:
+			print("Unknown effect key:", stat)
+	_update_ui()  # Refresh UI after applying effects
 
 # Check if the game is over
 func check_game_over():
@@ -188,8 +211,3 @@ func _end_game(message: String):
 # Handle the "Next Turn" button press
 func _on_next_turn_button_pressed():
 	next_turn()
-
-
-
-func _on_option_1_button_pressed() -> void:
-	pass # Replace with function body.

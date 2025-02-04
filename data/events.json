@@ -1,7 +1,7 @@
 {
 	"events": [
 		{
-			"id": "tax_protest",
+			"id": "tax_reform_protest",
 			"type": "protest",
 			"title": "Tax Reform Protest",
 			"description": "Citizens are protesting against the new tax reforms!",
@@ -65,6 +65,261 @@
 				{
 					"text": "Cover It Up",
 					"effects": {"corruption": 10, "public_support": -20, "morality": -20}
+				}
+			]
+		},
+		{
+			"id": "bribery_opportunity",
+			"type": "event",
+			"title": "Bribery Opportunity",
+			"description": "A wealthy businessman offers you a bribe to pass favorable legislation.",
+			"trigger_conditions": ["corruption > 50", "economy < 50"],
+			"options": [
+				{
+					"text": "Accept Bribe",
+					"effects": {"corruption": 15, "economy": 10, "morality": -15}
+				},
+				{
+					"text": "Reject Bribe",
+					"effects": {"corruption": -5, "morality": 10, "public_support": 5}
+				}
+			]
+		},
+		{
+			"id": "election_fraud",
+			"type": "event",
+			"title": "Election Fraud Allegations",
+			"description": "Opposition parties accuse you of election fraud during the last election.",
+			"trigger_conditions": ["morality < 30", "public_support < 40"],
+			"options": [
+				{
+					"text": "Admit Guilt",
+					"effects": {"morality": -20, "public_support": -20, "game_over": true}
+				},
+				{
+					"text": "Deny Accusations",
+					"effects": {"corruption": 10, "morality": -10, "public_support": -5}
+				}
+			]
+		},
+		{
+			"id": "media_blackmail",
+			"type": "event",
+			"title": "Media Blackmail",
+			"description": "A journalist threatens to expose your dark secrets unless you pay them off.",
+			"trigger_conditions": ["morality < 40", "corruption > 60"],
+			"options": [
+				{
+					"text": "Pay Off Journalist",
+					"effects": {"economy": -10, "corruption": 5, "morality": -10}
+				},
+				{
+					"text": "Ignore Threat",
+					"effects": {"public_support": -15, "morality": -20, "game_over": true}
+				}
+			]
+		},
+		{
+			"id": "military_coup",
+			"type": "event",
+			"title": "Military Coup",
+			"description": "Disgruntled military officers plan to overthrow your government.",
+			"trigger_conditions": ["authority < 30", "public_support < 20"],
+			"options": [
+				{
+					"text": "Crack Down on Military",
+					"effects": {"authority": 10, "public_support": -10, "morality": -10}
+				},
+				{
+					"text": "Resign Gracefully",
+					"effects": {"game_over": true}
+				}
+			]
+		},
+		{
+			"id": "oil_corruption",
+			"type": "event",
+			"title": "Oil Corruption Scandal",
+			"description": "Your administration is accused of siphoning oil profits into private accounts.",
+			"trigger_conditions": ["corruption > 80", "public_support < 30"],
+			"options": [
+				{
+					"text": "Blame Subordinates",
+					"effects": {"corruption": 5, "public_support": -10, "morality": -10}
+				},
+				{
+					"text": "Resign Immediately",
+					"effects": {"game_over": true}
+				}
+			]
+		},
+		{
+			"id": "assassination_plot",
+			"type": "event",
+			"title": "Assassination Plot",
+			"description": "Intelligence reports suggest an assassination plot against you.",
+			"trigger_conditions": ["morality < 20", "corruption > 70"],
+			"options": [
+				{
+					"text": "Strengthen Security",
+					"effects": {"authority": 10, "economy": -5, "morality": -5}
+				},
+				{
+					"text": "Ignore the Threat",
+					"effects": {"game_over": true}
+				}
+			]
+		},
+		{
+			"id": "political_allies_betrayal",
+			"type": "event",
+			"title": "Political Allies Betray You",
+			"description": "Your closest political allies have betrayed you and joined the opposition.",
+			"trigger_conditions": ["diplomacy < 30", "public_support < 40"],
+			"options": [
+				{
+					"text": "Rebuild Alliances",
+					"effects": {"diplomacy": 10, "public_support": 5, "economy": -5}
+				},
+				{
+					"text": "Purge Opponents",
+					"effects": {"authority": 10, "public_support": -10, "morality": -10}
+				}
+			]
+		},
+		{
+			"id": "propaganda_campaign",
+			"type": "event",
+			"title": "Propaganda Campaign",
+			"description": "State media can launch a propaganda campaign to improve your image.",
+			"trigger_conditions": ["propaganda > 50", "public_support < 50"],
+			"options": [
+				{
+					"text": "Launch Campaign",
+					"effects": {"public_support": 15, "morality": -5, "economy": -5}
+				},
+				{
+					"text": "Do Nothing",
+					"effects": {"public_support": -5, "morality": -5}
+				}
+			]
+		},
+		{
+			"id": "natural_disaster",
+			"type": "event",
+			"title": "Natural Disaster",
+			"description": "A massive earthquake devastates several cities!",
+			"trigger_conditions": ["economy < 40", "public_support < 60"],
+			"options": [
+				{
+					"text": "Allocate Emergency Funds",
+					"effects": {"economy": -10, "public_support": 10, "morality": 5}
+				},
+				{
+					"text": "Ration Resources",
+					"effects": {"public_support": -10, "morality": -10}
+				}
+			]
+		},
+		{
+			"id": "economic_crash",
+			"type": "event",
+			"title": "Economic Crash",
+			"description": "The economy is spiraling out of control due to poor fiscal policies.",
+			"trigger_conditions": ["economy < 20", "unemployment > 60"],
+			"options": [
+				{
+					"text": "Implement Austerity Measures",
+					"effects": {"economy": 10, "public_support": -15, "morality": -5}
+				},
+				{
+					"text": "Print More Money",
+					"effects": {"economy": -5, "corruption": 10, "morality": -10}
+				}
+			]
+		},
+		{
+			"id": "student_protests",
+			"type": "protest",
+			"title": "Student Protests",
+			"description": "Students are protesting against rising tuition fees and lack of job opportunities.",
+			"trigger_conditions": ["education < 40", "unemployment > 50"],
+			"options": [
+				{
+					"text": "Offer Scholarships",
+					"effects": {"education": 10, "economy": -5, "morality": 5}
+				},
+				{
+					"text": "Deploy Police",
+					"effects": {"public_support": -10, "corruption": 5, "morality": -5}
+				}
+			]
+		},
+		{
+			"id": "business_lawsuit",
+			"type": "event",
+			"title": "Business Lawsuit",
+			"description": "A major corporation sues the government for unfair regulations.",
+			"trigger_conditions": ["corruption > 60", "economy < 50"],
+			"options": [
+				{
+					"text": "Settle Out of Court",
+					"effects": {"economy": -10, "corruption": -5, "morality": 5}
+				},
+				{
+					"text": "Fight the Lawsuit",
+					"effects": {"public_support": -5, "corruption": 5, "morality": -5}
+				}
+			]
+		},
+		{
+			"id": "environmental_crisis",
+			"type": "event",
+			"title": "Environmental Crisis",
+			"description": "Severe pollution levels are causing public outrage!",
+			"trigger_conditions": ["healthcare < 30", "public_support < 50"],
+			"options": [
+				{
+					"text": "Ban Polluting Factories",
+					"effects": {"economy": -5, "public_support": 10, "morality": 10}
+				},
+				{
+					"text": "Ignore the Problem",
+					"effects": {"public_support": -15, "morality": -15}
+				}
+			]
+		},
+		{
+			"id": "foreign_intervention",
+			"type": "event",
+			"title": "Foreign Intervention",
+			"description": "A foreign power threatens to intervene due to human rights abuses.",
+			"trigger_conditions": ["morality < 30", "corruption > 70"],
+			"options": [
+				{
+					"text": "Apologize and Reform",
+					"effects": {"morality": 10, "corruption": -10, "public_support": 10}
+				},
+				{
+					"text": "Defy the Foreign Power",
+					"effects": {"authority": 10, "public_support": -10, "morality": -10}
+				}
+			]
+		},
+		{
+			"id": "cyber_attack",
+			"type": "event",
+			"title": "Cyber Attack",
+			"description": "Hackers have breached government servers and leaked sensitive data.",
+			"trigger_conditions": ["security < 40", "corruption > 50"],
+			"options": [
+				{
+					"text": "Investigate and Fix",
+					"effects": {"security": 10, "economy": -5, "morality": 5}
+				},
+				{
+					"text": "Blame Foreign Agents",
+					"effects": {"public_support": -5, "corruption": 5, "morality": -5}
 				}
 			]
 		}
