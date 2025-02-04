@@ -41,10 +41,10 @@ text = "Next Turn"
 
 [node name="NotificationPanel" type="Panel" parent="UI"]
 layout_mode = 0
-offset_left = 500.0
-offset_top = 41.0
-offset_right = 828.0
-offset_bottom = 114.0
+offset_left = 944.0
+offset_top = 8.0
+offset_right = 1272.0
+offset_bottom = 81.0
 
 [node name="NotificationLabel" type="Label" parent="UI/NotificationPanel"]
 layout_mode = 0
@@ -71,3 +71,4 @@ script = ExtResource("2_vj4x8")
 
 [connection signal="pressed" from="UI/VBoxContainer/NextTurnButton" to="." method="_on_next_turn_button_pressed"]
 [connection signal="pressed" from="UI/NotificationPanel/Option1Button" to="." method="_on_option_1_button_pressed"]
+[connection signal="pressed" from="UI/NotificationPanel/Option2Button" to="." method="_on_option_2_button_pressed"]

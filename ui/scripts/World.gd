@@ -190,9 +190,6 @@ func _on_next_turn_button_pressed():
 	next_turn()
 
 
+
 func _on_option_1_button_pressed() -> void:
-	pass # Replace with function body.
-
-
-func _on_option_2_button_pressed() -> void:
 	pass # Replace with function body.
