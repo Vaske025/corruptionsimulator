@@ -22,8 +22,8 @@ var selected_attribute: String = ""
 @onready var points_label = $VBoxContainer/PointsLabel
 @onready var start_button = $VBoxContainer/StartButton
 @onready var reset_button = $VBoxContainer/ResetButton
-@onready var error_label = $VBoxContainer/ErrorLabel
-@onready var error_animation = $VBoxContainer/ErrorAnimation
+@onready var error_label = $VBoxContainer/ErrorPanel/ErrorLabel
+@onready var error_animation = $VBoxContainer/ErrorPanel/ErrorAnimation
 
 func _ready():
 	_update_ui()
@@ -149,16 +149,19 @@ func _play_sound(path):
 	sound.queue_free()
 
 
-func _on_start__button_pressed() :
+func _on_start__button_pressed():
 	if points == 0:
 		GlobalData.player_traits = traits.duplicate()
 		GameStateManager.transition_to(GameStateManager.State.GAME)
 	else:
-		if error_label:
+		if error_label and error_animation:
 			error_label.text = "Allocate all points before starting!"
-			if error_animation:
-				error_animation.play("error_flash")
-			else:
-				print("Error animation is null")
+			error_animation.play("error_flash")  # Reproduciraj animaciju
 		else:
-			print("Error label is null")
+			print("Error: Missing ErrorLabel or ErrorAnimation")
+func _show_error(message: String):
+	if error_label and error_animation:
+		error_label.text = message 
+		error_animation.play("error_flash")  # Reproduciraj animaciju
+	else:
+		print("Error: Missing ErrorLabel or ErrorAnimation")

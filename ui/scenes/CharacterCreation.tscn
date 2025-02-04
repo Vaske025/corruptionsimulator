@@ -1,6 +1,43 @@
-[gd_scene load_steps=2 format=3 uid="uid://c15ikn3vs7r43"]
+[gd_scene load_steps=5 format=3 uid="uid://c15ikn3vs7r43"]
 
 [ext_resource type="Script" path="res://ui/scripts/CharacterCreation.gd" id="1_w8ok3"]
+
+[sub_resource type="Animation" id="Animation_jjoo0"]
+resource_name = "error_flash"
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ErrorLabel:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 0, 0, 1), Color(1, 0, 0, 0.5), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_4g22l"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ErrorLabel:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.673381, 0, 0.150289, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_amw8g"]
+_data = {
+"RESET": SubResource("Animation_4g22l"),
+"error_flash": SubResource("Animation_jjoo0")
+}
 
 [node name="CharacterCreation" type="Control"]
 layout_mode = 3
@@ -61,10 +98,31 @@ text = "-"
 layout_mode = 2
 text = "Start Game"
 
+[node name="ResetButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Reset"
+
 [node name="PointsLabel" type="Label" parent="VBoxContainer"]
 layout_mode = 2
 text = "Points Remaining: 10"
 script = ExtResource("1_w8ok3")
+
+[node name="ErrorPanel" type="Panel" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="ErrorLabel" type="Label" parent="VBoxContainer/ErrorPanel"]
+modulate = Color(0.673381, 0, 0.150289, 1)
+layout_mode = 2
+offset_left = 1.0
+offset_top = 14.0
+offset_right = 255.0
+offset_bottom = 99.0
+
+[node name="ErrorAnimation" type="AnimationPlayer" parent="VBoxContainer/ErrorPanel"]
+libraries = {
+"": SubResource("AnimationLibrary_amw8g")
+}
+next/error_flash = &"error_flash"
 
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/DiplomacyButton" to="." method="_on_diplomacy_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/MinusDiplomacyButton" to="." method="_on_minus_diplomacy_button_pressed"]
@@ -73,3 +131,4 @@ script = ExtResource("1_w8ok3")
 [connection signal="pressed" from="VBoxContainer/HBoxContainer3/AuthorityButton" to="." method="_on_authority_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer3/MinusAuthorityButton" to="." method="_on_minus_authority_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/Start  Button" to="." method="_on_start__button_pressed"]
+[connection signal="pressed" from="VBoxContainer/ResetButton" to="." method="_on_reset_button_pressed"]

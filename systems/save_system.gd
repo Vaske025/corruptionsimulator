@@ -6,9 +6,9 @@ const SAVE_PATH = "user://savegame.save"
 
 func save_game():
 	var save_data = {
-		"stats": Global.country_stats,
-		"policies": Global.policies,
-		"history": Global.game_history
+		"stats": GlobalData.country_stats,
+		"policies": GlobalData.policies,
+		"history": GlobalData.game_history
 	}
 	
 	var file = FileAccess.open(SAVE_PATH, FileAccess.WRITE)

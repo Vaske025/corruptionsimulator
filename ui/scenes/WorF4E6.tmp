@@ -70,5 +70,3 @@ offset_bottom = 63.0
 script = ExtResource("2_vj4x8")
 
 [connection signal="pressed" from="UI/VBoxContainer/NextTurnButton" to="." method="_on_next_turn_button_pressed"]
-[connection signal="pressed" from="UI/NotificationPanel/Option1Button" to="." method="_on_option_1_button_pressed"]
-[connection signal="pressed" from="UI/NotificationPanel/Option2Button" to="." method="_on_option_2_button_pressed"]
