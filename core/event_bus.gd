@@ -1,5 +1,4 @@
 # Autoload-safe event bus implementation
-
 extends Node
 
 # Signals

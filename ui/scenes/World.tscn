@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://dr16p6noigkal"]
+[gd_scene load_steps=4 format=3 uid="uid://dr16p6noigkal"]
 
 [ext_resource type="Script" path="res://ui/scripts/World.gd" id="1_uvadp"]
+[ext_resource type="Script" path="res://ui/scripts/Notifications.gd" id="2_loxpi"]
 [ext_resource type="Script" path="res://ui/scripts/CustomButton.gd" id="2_vj4x8"]
 
 [node name="World" type="Node2D"]
@@ -45,6 +46,7 @@ offset_left = 154.0
 offset_top = 41.0
 offset_right = 1125.0
 offset_bottom = 257.0
+script = ExtResource("2_loxpi")
 
 [node name="NotificationLabel" type="Label" parent="UI/NotificationPanel"]
 layout_mode = 0
